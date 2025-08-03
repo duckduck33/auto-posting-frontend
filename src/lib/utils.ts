@@ -4,10 +4,10 @@ export const storage = {
     if (typeof window === 'undefined') return null;
     try {
       return localStorage.getItem(key);
-    } catch (error) {
-      console.error('localStorage 접근 오류:', error);
-      return null;
-    }
+      } catch {
+    console.error('localStorage 접근 오류');
+    return null;
+  }
   },
 
   set: (key: string, value: string): void => {

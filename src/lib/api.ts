@@ -30,7 +30,7 @@ export interface AutomationStatus {
   currentStep: number;
   totalSteps: number;
   stepDescription: string;
-  currentGeneratingPost: any;
+  currentGeneratingPost: GeneratingPost | null;
   printMessages: LogEntry[];
 }
 
@@ -114,7 +114,7 @@ class ApiClient {
 
   // 블로그 포스트 생성
   async generateBlogPost(keyword: string) {
-    return this.request<{ success: boolean; data?: any; error?: string }>('/generate', {
+    return this.request<{ success: boolean; data?: { title: string; content: string; keyword: string }; error?: string }>('/generate', {
       method: 'POST',
       body: JSON.stringify({ keyword }),
     });
@@ -122,7 +122,7 @@ class ApiClient {
 
   // 블로그 포스트 업로드
   async uploadBlogPost(title: string, content: string) {
-    return this.request<{ success: boolean; data?: any; error?: string }>('/upload', {
+    return this.request<{ success: boolean; data?: { title: string; url: string }; error?: string }>('/upload', {
       method: 'POST',
       body: JSON.stringify({ title, content }),
     });

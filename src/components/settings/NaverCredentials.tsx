@@ -27,8 +27,8 @@ export default function NaverCredentials({ className = '' }: NaverCredentialsPro
         setNaverId(response.data.naverId);
         setHasPassword(response.data.hasPassword);
       }
-    } catch (error) {
-      console.error('네이버 로그인 정보 조회 실패:', error);
+    } catch {
+      console.error('네이버 로그인 정보 조회 실패');
     }
   };
 

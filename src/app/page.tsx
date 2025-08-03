@@ -3,14 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import { KeywordInput } from '../components/settings/KeywordInput';
 import { AutomationControls } from '../components/settings/AutomationControls';
-import { StatusDisplay } from '../components/settings/StatusDisplay';
 import NaverCredentials from '../components/settings/NaverCredentials';
 import { LogViewer } from '../components/monitoring/LogViewer';
-import { GeneratedPostViewer } from '../components/monitoring/GeneratedPostViewer';
 import { Tabs } from '../components/ui/tabs';
 import { apiClient, GeneratingPost, LogEntry } from '../lib/api';
 import { storage } from '../lib/utils';
-import type { AppState, GeneratedPost } from '../types';
+import type { AppState } from '../types';
 
 export default function Home() {
   const [state, setState] = useState<AppState>({
@@ -24,7 +22,7 @@ export default function Home() {
     activeTab: 'logs',
   });
 
-  const [generatingPost, setGeneratingPost] = useState<GeneratingPost | null>(null);
+
 
   // 상태 업데이트 함수
   const updateState = (updates: Partial<AppState>) => {
@@ -119,9 +117,8 @@ export default function Home() {
         const status = await apiClient.getStatus();
         const logs = await apiClient.getLogs();
         const posts = await apiClient.getGeneratedPosts();
-        const generating = await apiClient.getGeneratingPost();
 
-        console.log('🔍 폴링 결과:', { status, generating }); // 디버깅용
+        console.log('🔍 폴링 결과:', { status }); // 디버깅용
 
         updateState({
           isRunning: status.isRunning,
@@ -131,10 +128,8 @@ export default function Home() {
           generatedPosts: posts,
         });
 
-        setGeneratingPost(generating);
-
-        // 자동화가 실행 중이거나 생성 중인 글이 있으면 계속 폴링
-        if (status.isRunning || (generating && generating.isGenerating)) {
+        // 자동화가 실행 중이면 계속 폴링
+        if (status.isRunning) {
           setTimeout(pollStatus, 1000); // 1초마다 폴링
         }
       } catch (error) {
@@ -168,7 +163,6 @@ export default function Home() {
         const status = await apiClient.getStatus();
         const logs = await apiClient.getLogs();
         const posts = await apiClient.getGeneratedPosts();
-        const generating = await apiClient.getGeneratingPost();
 
         updateState({
           isRunning: status.isRunning,
@@ -177,8 +171,6 @@ export default function Home() {
           logs: logs,
           generatedPosts: posts,
         });
-
-        setGeneratingPost(generating);
 
         if (status.isRunning) {
           startStatusPolling();
@@ -189,7 +181,7 @@ export default function Home() {
     };
 
     loadInitialState();
-  }, []);
+  }, [startStatusPolling]);
 
   const tabs = [
     {
