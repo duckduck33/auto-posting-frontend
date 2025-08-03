@@ -1,6 +1,6 @@
 import type { LogEntry, GeneratedPost, AutomationStatus, NaverCredentials, GeneratingPost } from '../types';
 
-const API_BASE_URL = 'https://auto-posting-backend-production.up.railway.app';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://auto-posting-backend-production.up.railway.app';
 
 class ApiClient {
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {

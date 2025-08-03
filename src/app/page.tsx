@@ -113,7 +113,10 @@ export default function Home() {
 
   // 상태 폴링
   const startStatusPolling = () => {
+    let isPolling = false; // 중복 폴링 방지
     const pollStatus = async () => {
+      if (isPolling) return; // 이미 폴링 중이면 중단
+      isPolling = true;
       try {
         const status = await apiClient.getStatus();
         const logs = await apiClient.getLogs();
@@ -131,7 +134,7 @@ export default function Home() {
 
         // 자동화가 실행 중이면 계속 폴링
         if (status.isRunning) {
-          setTimeout(pollStatus, 1000); // 1초마다 폴링
+          setTimeout(pollStatus, 3000); // 3초마다 폴링으로 변경
         }
       } catch (error) {
         console.error('상태 폴링 오류:', error);
@@ -182,7 +185,7 @@ export default function Home() {
     };
 
     loadInitialState();
-  }, [startStatusPolling]);
+  }, []); // 의존성 배열을 비워서 한 번만 실행
 
   const tabs = [
     {
