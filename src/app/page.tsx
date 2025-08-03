@@ -6,7 +6,7 @@ import { AutomationControls } from '../components/settings/AutomationControls';
 import NaverCredentials from '../components/settings/NaverCredentials';
 import { LogViewer } from '../components/monitoring/LogViewer';
 import { Tabs } from '../components/ui/tabs';
-import { apiClient, GeneratingPost, LogEntry } from '../lib/api';
+import { apiClient, LogEntry } from '../lib/api';
 import { storage } from '../lib/utils';
 import type { AppState } from '../types';
 

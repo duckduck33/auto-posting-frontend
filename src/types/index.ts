@@ -33,7 +33,7 @@ export interface AutomationStatus {
   currentStep: number;
   totalSteps: number;
   stepDescription: string;
-  currentGeneratingPost: any | null;
+  currentGeneratingPost: GeneratingPost | null;
   printMessages: LogEntry[];
 }
 
@@ -77,6 +77,13 @@ export type KeywordChangeHandler = (keyword: string) => void;
 export type TabChangeHandler = (tabId: string) => void;
 
 // 추가 타입들
+export interface GeneratingPost {
+  keyword: string;
+  startedAt: string;
+  status: string;
+  isGenerating: boolean;
+}
+
 export interface NaverCredentials {
   naverId: string;
   hasPassword: boolean;
