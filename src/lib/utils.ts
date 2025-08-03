@@ -62,7 +62,7 @@ export const truncateText = (text: string, maxLength: number): string => {
 };
 
 // 로그 레벨에 따른 색상 유틸리티
-export const getLogLevelColor = (level: string): string => {
+export const getLogLevelColor = (level: 'error' | 'warning' | 'info' | 'success'): string => {
   switch (level.toLowerCase()) {
     case 'error':
       return 'text-red-600';

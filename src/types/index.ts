@@ -13,7 +13,7 @@ export interface AutomationResponse {
 export interface LogEntry {
   timestamp: string;
   message: string;
-  level: 'info' | 'warning' | 'error';
+  level: 'error' | 'warning' | 'info' | 'success';
 }
 
 export interface GeneratedPost {
@@ -30,6 +30,8 @@ export interface AutomationStatus {
   currentStep: number;
   totalSteps: number;
   stepDescription: string;
+  currentGeneratingPost: any | null;
+  printMessages: LogEntry[];
 }
 
 // UI 상태 타입들
@@ -60,27 +62,9 @@ export interface AutomationControlsProps {
   loading?: boolean;
 }
 
-export interface StatusDisplayProps {
-  status: string;
-  progress: number;
-  className?: string;
-}
-
 export interface LogViewerProps {
   logs: LogEntry[];
   onClearLogs: () => void;
-  className?: string;
-}
-
-export interface GeneratedPostViewerProps {
-  posts: GeneratedPost[];
-  className?: string;
-}
-
-export interface ProgressMonitorProps {
-  currentStep: number;
-  totalSteps: number;
-  stepDescription: string;
   className?: string;
 }
 
