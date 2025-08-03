@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://auto-posting-backend-production.up.railway.app';
 
 export interface GeneratingPost {
   keyword: string;
