@@ -117,6 +117,7 @@ export default function Home() {
     const pollStatus = async () => {
       if (isPolling) return; // 이미 폴링 중이면 중단
       isPolling = true;
+      
       try {
         const status = await apiClient.getStatus();
         const logs = await apiClient.getLogs();
@@ -135,6 +136,47 @@ export default function Home() {
         // 자동화가 실행 중이면 계속 폴링
         if (status.isRunning) {
           setTimeout(pollStatus, 3000); // 3초마다 폴링으로 변경
+        } else {
+          // 자동화가 실행되지 않으면 폴링 중단
+          isPolling = false;
+        }
+      } catch (error) {
+        console.error('상태 폴링 오류:', error);
+        // 에러를 로그에 추가
+        const errorLog: LogEntry = {
+          timestamp: new Date().toISOString(),
+          message: `API 연결 오류: ${error instanceof Error ? error.message : '알 수 없는 오류'}`,
+          level: 'error'
+        };
+        updateState({
+          logs: [...state.logs, errorLog],
+          isRunning: false,
+          status: 'API 연결 오류'
+        });
+        isPolling = false; // 에러 발생 시에도 폴링 중단
+      }
+    };
+      try {
+        const status = await apiClient.getStatus();
+        const logs = await apiClient.getLogs();
+        const posts = await apiClient.getGeneratedPosts();
+
+        console.log('🔍 폴링 결과:', { status }); // 디버깅용
+
+        updateState({
+          isRunning: status.isRunning,
+          status: status.status,
+          progress: status.progress,
+          logs: logs,
+          generatedPosts: posts,
+        });
+
+        // 자동화가 실행 중이면 계속 폴링
+        if (status.isRunning) {
+          setTimeout(pollStatus, 3000); // 3초마다 폴링으로 변경
+        } else {
+          // 자동화가 실행되지 않으면 폴링 중단
+          isPolling = false;
         }
       } catch (error) {
         console.error('상태 폴링 오류:', error);
