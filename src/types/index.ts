@@ -30,7 +30,7 @@ export interface AutomationStatus {
   currentStep: number;
   totalSteps: number;
   stepDescription: string;
-  currentGeneratingPost: any | null;
+  currentGeneratingPost: GeneratingPost | null;
   printMessages: LogEntry[];
 }
 

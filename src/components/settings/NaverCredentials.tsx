@@ -51,7 +51,7 @@ export default function NaverCredentials({ className = '' }: NaverCredentialsPro
       } else {
         setMessage(response.message || '저장에 실패했습니다.');
       }
-    } catch (error) {
+    } catch {
       setMessage('저장 중 오류가 발생했습니다.');
     } finally {
       setIsLoading(false);

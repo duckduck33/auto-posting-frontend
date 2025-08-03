@@ -14,27 +14,27 @@ export const storage = {
     if (typeof window === 'undefined') return;
     try {
       localStorage.setItem(key, value);
-    } catch (error) {
-      console.error('localStorage 저장 오류:', error);
-    }
+      } catch {
+    console.error('localStorage 저장 오류');
+  }
   },
 
   remove: (key: string): void => {
     if (typeof window === 'undefined') return;
     try {
       localStorage.removeItem(key);
-    } catch (error) {
-      console.error('localStorage 삭제 오류:', error);
-    }
+      } catch {
+    console.error('localStorage 삭제 오류');
+  }
   },
 
   clear: (): void => {
     if (typeof window === 'undefined') return;
     try {
       localStorage.clear();
-    } catch (error) {
-      console.error('localStorage 초기화 오류:', error);
-    }
+      } catch {
+    console.error('localStorage 초기화 오류');
+  }
   }
 };
 
@@ -50,7 +50,7 @@ export const formatDate = (dateString: string): string => {
       minute: '2-digit',
       second: '2-digit'
     });
-  } catch (error) {
+  } catch {
     return dateString;
   }
 };
