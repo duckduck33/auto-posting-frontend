@@ -21,6 +21,9 @@ export interface GeneratedPost {
   title: string;
   content: string;
   createdAt: string;
+  status: string;
+  uploaded?: boolean;
+  blogUrl?: string;
 }
 
 export interface AutomationStatus {
@@ -30,7 +33,7 @@ export interface AutomationStatus {
   currentStep: number;
   totalSteps: number;
   stepDescription: string;
-  currentGeneratingPost: GeneratingPost | null;
+  currentGeneratingPost: any | null;
   printMessages: LogEntry[];
 }
 
@@ -71,4 +74,10 @@ export interface LogViewerProps {
 // 이벤트 핸들러 타입들
 export type AutomationEventHandler = () => void;
 export type KeywordChangeHandler = (keyword: string) => void;
-export type TabChangeHandler = (tabId: string) => void; 
+export type TabChangeHandler = (tabId: string) => void;
+
+// 추가 타입들
+export interface NaverCredentials {
+  naverId: string;
+  hasPassword: boolean;
+} 

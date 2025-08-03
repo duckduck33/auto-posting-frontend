@@ -1,3 +1,5 @@
+import type { LogEntry, GeneratedPost, AutomationStatus, NaverCredentials } from '../types';
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://auto-posting-backend-production.up.railway.app';
 
 export interface GeneratingPost {
@@ -5,38 +7,6 @@ export interface GeneratingPost {
   startedAt: string;
   status: string;
   isGenerating: boolean;
-}
-
-export interface LogEntry {
-  timestamp: string;
-  message: string;
-  level: 'error' | 'warning' | 'info' | 'success';
-}
-
-export interface GeneratedPost {
-  id: string;
-  title: string;
-  content: string;
-  createdAt: string;
-  status: string;
-  uploaded?: boolean;
-  blogUrl?: string;
-}
-
-export interface AutomationStatus {
-  isRunning: boolean;
-  progress: number;
-  status: string;
-  currentStep: number;
-  totalSteps: number;
-  stepDescription: string;
-  currentGeneratingPost: GeneratingPost | null;
-  printMessages: LogEntry[];
-}
-
-export interface NaverCredentials {
-  naverId: string;
-  hasPassword: boolean;
 }
 
 class ApiClient {
