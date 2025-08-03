@@ -10,7 +10,7 @@ export interface GeneratingPost {
 export interface LogEntry {
   timestamp: string;
   message: string;
-  level: string;
+  level: 'error' | 'warning' | 'info' | 'success';
 }
 
 export interface GeneratedPost {
